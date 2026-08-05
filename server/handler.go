@@ -19,12 +19,12 @@ func SiteURLFromEnv() string {
 }
 
 func staticFS() fs.FS {
-	for _, dir := range []string{"static", "../static"} {
+	for _, dir := range []string{"public", "../public"} {
 		if info, err := os.Stat(dir); err == nil && info.IsDir() {
 			return os.DirFS(dir)
 		}
 	}
-	return os.DirFS("static")
+	return os.DirFS("public")
 }
 
 func NewHandler() http.Handler {
@@ -77,7 +77,7 @@ func NewHandler() http.Handler {
 			return
 		}
 		if reqPath == "/" {
-			serveHTML(w, r, path.Join("index", "index.html"), "/")
+			serveHTML(w, r, "index.html", "/")
 			return
 		}
 		if !strings.Contains(path.Base(reqPath), ".") {

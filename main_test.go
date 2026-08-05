@@ -9,7 +9,7 @@ import (
 )
 
 func TestStaticIndexExists(t *testing.T) {
-	path := filepath.Join("static", "index", "index.html")
+	path := filepath.Join("public", "index.html")
 	if _, err := os.Stat(path); err != nil {
 		t.Fatalf("expected %s: %v", path, err)
 	}
@@ -26,7 +26,7 @@ func TestAllImagesPresent(t *testing.T) {
 		"www-learning.jpeg",
 	}
 	for _, name := range needed {
-		path := filepath.Join("static", "images", name)
+		path := filepath.Join("public", "images", name)
 		if _, err := os.Stat(path); err != nil {
 			t.Errorf("missing image %s: %v", name, err)
 		}
@@ -34,8 +34,8 @@ func TestAllImagesPresent(t *testing.T) {
 }
 
 func TestFileServerServesRouteIndex(t *testing.T) {
-	fs := http.FileServer(http.Dir("static"))
-	req := httptest.NewRequest(http.MethodGet, "/index/", nil)
+	fs := http.FileServer(http.Dir("public"))
+	req := httptest.NewRequest(http.MethodGet, "/", nil)
 	rr := httptest.NewRecorder()
 	fs.ServeHTTP(rr, req)
 	if rr.Code != http.StatusOK {

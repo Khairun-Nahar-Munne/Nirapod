@@ -5,7 +5,7 @@ Bangla-first digital safety website for Class 4–10 students: learning hub, awa
 ## Stack
 
 - **Go** — static file server (`main.go`)
-- **HTML / CSS / vanilla JS** — pages in `static/`
+- **HTML / CSS / vanilla JS** — pages in `public/`
 
 ## Run
 
@@ -29,7 +29,7 @@ go run .
 
 ## Google Form (অভিযোগ করুন)
 
-Edit `static/js/config.js`:
+Edit `public/js/config.js`:
 
 ```js
 window.NIRAPOD = {
@@ -58,4 +58,4 @@ The red **অভিযোগ করুন** button in the header (and on Report 
 
 ## Images
 
-Project photos live in `static/images/` (copied from `Images/` with kebab-case names). All seven photos are used across Home, Learning, Team, News, and Resources.
+Project photos live in `public/images/`. They are used across Home, Learning, Team, Activities, and Resources.
