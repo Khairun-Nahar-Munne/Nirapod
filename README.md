@@ -16,6 +16,10 @@ go run .
 
 Open [http://localhost:8080](http://localhost:8080)
 
+## Deploy to Vercel
+
+Import this repository with the project root set to `Nirapod`. Leave the Framework Preset and Output Directory unset. Vercel detects `main.go` and runs the Go server automatically; no `api/` function configuration is required.
+
 Optional port:
 
 ```bash
