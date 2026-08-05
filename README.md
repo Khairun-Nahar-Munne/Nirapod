@@ -42,15 +42,15 @@ The red **অভিযোগ করুন** button in the header (and on Report 
 | Path | Description |
 |------|-------------|
 | `/` | Home (hero photo) |
-| `/learning/` | Learning hub + search |
-| `/learning/<module>/` | 12 safety modules + quizzes |
-| `/safe/` | Platform safety tips |
-| `/report/` | Complaint CTA → Google Form |
-| `/dashboard/` | Demo stats |
-| `/team/` | Team |
-| `/resources/` | Resources |
-| `/news/` | Activities gallery |
-| `/contact/` | Contact |
+| `/learning` | Learning hub + search |
+| `/learning/<module>` | 11 safety modules + quizzes |
+| `/safe` | Platform safety tips |
+| `/report` | Complaint CTA → Google Form |
+| `/dashboard` | Demo stats |
+| `/team` | Team |
+| `/resources` | Resources |
+| `/activities` | Activities gallery |
+| `/contact` | Contact |
 
 ## Images
 

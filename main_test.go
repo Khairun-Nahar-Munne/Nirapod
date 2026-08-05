@@ -19,7 +19,7 @@ func TestAllImagesPresent(t *testing.T) {
 	needed := []string{
 		"students.jpeg",
 		"teaching.jpeg",
-		"teaching-2.jpeg",
+		"workshop.jpeg",
 		"students-exam.jpeg",
 		"cyber-learning.jpeg",
 		"security-learning.jpeg",

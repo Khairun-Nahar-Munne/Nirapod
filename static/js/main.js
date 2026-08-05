@@ -4,14 +4,14 @@
 
   const NAV = [
     { href: "/", label: "হোম" },
-    { href: "/learning/", label: "শেখার কোণ" },
-    { href: "/safe/", label: "নিরাপদ থাকুন" },
-    { href: "/report/", label: "অভিযোগ" },
-    { href: "/dashboard/", label: "ড্যাশবোর্ড" },
-    { href: "/team/", label: "নিরাপদ দল" },
-    { href: "/resources/", label: "রিসোর্স" },
-    { href: "/news/", label: "কার্যক্রম" },
-    { href: "/contact/", label: "যোগাযোগ" }
+    { href: "/learning", label: "শেখার কোণ" },
+    { href: "/safe", label: "নিরাপদ থাকুন" },
+    { href: "/report", label: "অভিযোগ" },
+    { href: "/dashboard", label: "ড্যাশবোর্ড" },
+    { href: "/team", label: "নিরাপদ দল" },
+    { href: "/resources", label: "রিসোর্স" },
+    { href: "/activities", label: "কার্যক্রম" },
+    { href: "/contact", label: "যোগাযোগ" }
   ];
 
   function currentPath() {
@@ -23,8 +23,8 @@
     if (href === "/") {
       return path === "/";
     }
-    if (href === "/learning/") {
-      return path.startsWith("/learning/");
+    if (href === "/learning") {
+      return path.startsWith("/learning");
     }
     return path === href;
   }
@@ -74,19 +74,16 @@
     <div>
       <h3>দ্রুত লিংক</h3>
       <ul>
-        <li><a href="/learning/">শেখার কোণ</a></li>
-        <li><a href="/report/">অভিযোগ করুন</a></li>
-        <li><a href="/dashboard/">ড্যাশবোর্ড</a></li>
-        <li><a href="/resources/">রিসোর্স</a></li>
+        <li><a href="/learning">শেখার কোণ</a></li>
+        <li><a href="/report">অভিযোগ করুন</a></li>
+        <li><a href="/dashboard">ড্যাশবোর্ড</a></li>
+        <li><a href="/resources">রিসোর্স</a></li>
       </ul>
     </div>
     <div>
       <h3>যোগাযোগ</h3>
       <ul>
-        <li><a href="/contact/">স্কুল ও শিক্ষক</a></li>
-        <li><a href="mailto:nirapod@example.com">Email</a></li>
-        <li><a href="#">Facebook</a></li>
-        <li><a href="/contact/">Privacy Policy</a></li>
+        <li><a href="/contact">স্কুল ও শিক্ষক</a></li>
       </ul>
     </div>
   </div>
@@ -181,12 +178,8 @@
     const chart = document.getElementById("monthlyBars");
     if (!chart) return;
     const data = [
-      { label: "জানু", value: 12 },
-      { label: "ফেব্রু", value: 18 },
-      { label: "মার্চ", value: 15 },
-      { label: "এপ্রিল", value: 22 },
-      { label: "মে", value: 28 },
-      { label: "জুন", value: 20 }
+      { label: "জুলাই", value: 12 },
+      { label: "আগস্ট", value: 18 }
     ];
     const max = Math.max(...data.map((d) => d.value));
     chart.innerHTML = data

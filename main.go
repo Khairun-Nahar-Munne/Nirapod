@@ -21,22 +21,33 @@ func main() {
 	mux.HandleFunc("/", func(w http.ResponseWriter, r *http.Request) {
 		path := r.URL.Path
 
-		// Keep route folders canonical and redirect legacy .html URLs.
+		// Keep clean, extensionless URLs canonical and redirect legacy paths.
+		if path == "/news" || path == "/news/" || path == "/news.html" {
+			http.Redirect(w, r, "/activities", http.StatusMovedPermanently)
+			return
+		}
 		if path == "/index/" || path == "/index.html" {
 			http.Redirect(w, r, "/", http.StatusMovedPermanently)
 			return
 		}
 		if strings.HasSuffix(path, ".html") {
-			http.Redirect(w, r, strings.TrimSuffix(path, ".html")+"/", http.StatusMovedPermanently)
+			http.Redirect(w, r, strings.TrimSuffix(path, ".html"), http.StatusMovedPermanently)
 			return
 		}
-		if path != "/" && !strings.Contains(filepath.Base(path), ".") && !strings.HasSuffix(path, "/") {
-			http.Redirect(w, r, path+"/", http.StatusMovedPermanently)
+		if path != "/" && strings.HasSuffix(path, "/") {
+			http.Redirect(w, r, strings.TrimSuffix(path, "/"), http.StatusMovedPermanently)
 			return
 		}
 		if path == "/" {
 			http.ServeFile(w, r, filepath.Join(staticDir, "index", "index.html"))
 			return
+		}
+		if !strings.Contains(filepath.Base(path), ".") {
+			candidate := filepath.Join(staticDir, strings.TrimPrefix(path, "/"), "index.html")
+			if _, err := os.Stat(candidate); err == nil {
+				http.ServeFile(w, r, candidate)
+				return
+			}
 		}
 
 		// Set caching for static assets
@@ -44,7 +55,13 @@ func main() {
 			w.Header().Set("Cache-Control", "public, max-age=86400")
 		}
 
-		fs.ServeHTTP(w, r)
+		if strings.HasPrefix(path, "/images/") || strings.HasPrefix(path, "/css/") || strings.HasPrefix(path, "/js/") || path == "/favicon.svg" {
+			fs.ServeHTTP(w, r)
+			return
+		}
+
+		w.WriteHeader(http.StatusNotFound)
+		http.ServeFile(w, r, filepath.Join(staticDir, "404.html"))
 	})
 
 	addr := ":8080"
