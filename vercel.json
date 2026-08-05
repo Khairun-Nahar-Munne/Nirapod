@@ -7,7 +7,9 @@
     }
   ],
   "routes": [
-    { "handle": "filesystem" }
+    {
+      "handle": "filesystem"
+    }
   ],
   "outputDirectory": "public",
   "cleanUrls": true,
