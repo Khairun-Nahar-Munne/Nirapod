@@ -1,4 +1,4 @@
-package main
+package server
 
 import (
 	"fmt"
@@ -253,7 +253,7 @@ func buildSEOBlock(seo pageSEO, path, siteURL string) string {
 
 func buildHomeJSONLD(siteURL string, seo pageSEO) string {
 	url := absoluteURL(siteURL, "/")
-	json := fmt.Sprintf(`  <script type="application/ld+json">
+	return fmt.Sprintf(`  <script type="application/ld+json">
 {
   "@context": "https://schema.org",
   "@type": "WebSite",
@@ -269,12 +269,11 @@ func buildHomeJSONLD(siteURL string, seo pageSEO) string {
 }
 </script>
 `, url, seo.Description)
-	return json
 }
 
 func buildLearningModuleJSONLD(siteURL, path string, seo pageSEO) string {
 	url := absoluteURL(siteURL, path)
-	json := fmt.Sprintf(`  <script type="application/ld+json">
+	return fmt.Sprintf(`  <script type="application/ld+json">
 {
   "@context": "https://schema.org",
   "@type": "LearningResource",
@@ -291,7 +290,6 @@ func buildLearningModuleJSONLD(siteURL, path string, seo pageSEO) string {
 }
 </script>
 `, seo.Title, seo.Description, url, absoluteURL(siteURL, "/"))
-	return json
 }
 
 func canonicalURL(siteURL, path string) string {
