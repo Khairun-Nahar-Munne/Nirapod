@@ -1,16 +1,5 @@
 {
   "$schema": "https://openapi.vercel.sh/vercel.json",
-  "builds": [
-    {
-      "src": "public/**",
-      "use": "@vercel/static"
-    }
-  ],
-  "routes": [
-    {
-      "handle": "filesystem"
-    }
-  ],
   "outputDirectory": "public",
   "cleanUrls": true,
   "trailingSlash": false,
@@ -19,6 +8,16 @@
       "source": "/news",
       "destination": "/activities",
       "permanent": true
+    }
+  ],
+  "rewrites": [
+    {
+      "source": "/robots.txt",
+      "destination": "/api/seo?doc=robots"
+    },
+    {
+      "source": "/sitemap.xml",
+      "destination": "/api/seo?doc=sitemap"
     }
   ]
 }

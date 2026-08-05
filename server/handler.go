@@ -8,15 +8,30 @@ import (
 	"strings"
 )
 
+// SiteURLFromEnv resolves the absolute site origin used for canonical links,
+// sitemap entries and Open Graph URLs. VERCEL_PROJECT_PRODUCTION_URL is
+// preferred over VERCEL_URL because the latter is unique per deployment and
+// would leak build-specific hostnames into indexable metadata.
 func SiteURLFromEnv() string {
-	if u := strings.TrimSpace(os.Getenv("SITE_URL")); u != "" {
-		return strings.TrimRight(u, "/")
-	}
-	if u := strings.TrimSpace(os.Getenv("VERCEL_URL")); u != "" {
-		return "https://" + strings.TrimRight(u, "/")
+	for _, key := range []string{"SITE_URL", "VERCEL_PROJECT_PRODUCTION_URL", "VERCEL_URL"} {
+		u := strings.TrimSpace(os.Getenv(key))
+		if u == "" {
+			continue
+		}
+		u = strings.TrimRight(u, "/")
+		if strings.HasPrefix(u, "http://") || strings.HasPrefix(u, "https://") {
+			return u
+		}
+		return "https://" + u
 	}
 	return ""
 }
+
+// RobotsTxt renders robots.txt for the given site origin.
+func RobotsTxt(siteURL string) string { return buildRobotsTxt(siteURL) }
+
+// SitemapXML renders sitemap.xml for the given site origin.
+func SitemapXML(siteURL string) string { return buildSitemapXML(siteURL) }
 
 func staticFS() fs.FS {
 	for _, dir := range []string{"public", "../public"} {
