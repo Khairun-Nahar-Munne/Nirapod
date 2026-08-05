@@ -6,6 +6,9 @@
       "use": "@vercel/static"
     }
   ],
+  "routes": [
+    { "handle": "filesystem" }
+  ],
   "outputDirectory": "public",
   "cleanUrls": true,
   "trailingSlash": false,
