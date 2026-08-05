@@ -9,6 +9,25 @@ import (
 	"time"
 )
 
+func siteURLFromEnv() string {
+	if u := strings.TrimSpace(os.Getenv("SITE_URL")); u != "" {
+		return strings.TrimRight(u, "/")
+	}
+	return ""
+}
+
+func serveHTML(w http.ResponseWriter, r *http.Request, filePath, seoPath string) {
+	content, err := os.ReadFile(filePath)
+	if err != nil {
+		http.NotFound(w, r)
+		return
+	}
+	html := injectSEO(string(content), seoPath, siteURLFromEnv())
+	w.Header().Set("Content-Type", "text/html; charset=utf-8")
+	w.Header().Set("Cache-Control", "public, max-age=300")
+	_, _ = w.Write([]byte(html))
+}
+
 func main() {
 	staticDir := "static"
 	if _, err := os.Stat(staticDir); err != nil {
@@ -38,14 +57,26 @@ func main() {
 			http.Redirect(w, r, strings.TrimSuffix(path, "/"), http.StatusMovedPermanently)
 			return
 		}
+		if path == "/robots.txt" {
+			w.Header().Set("Content-Type", "text/plain; charset=utf-8")
+			w.Header().Set("Cache-Control", "public, max-age=86400")
+			_, _ = w.Write([]byte(buildRobotsTxt(siteURLFromEnv())))
+			return
+		}
+		if path == "/sitemap.xml" {
+			w.Header().Set("Content-Type", "application/xml; charset=utf-8")
+			w.Header().Set("Cache-Control", "public, max-age=86400")
+			_, _ = w.Write([]byte(buildSitemapXML(siteURLFromEnv())))
+			return
+		}
 		if path == "/" {
-			http.ServeFile(w, r, filepath.Join(staticDir, "index", "index.html"))
+			serveHTML(w, r, filepath.Join(staticDir, "index", "index.html"), "/")
 			return
 		}
 		if !strings.Contains(filepath.Base(path), ".") {
 			candidate := filepath.Join(staticDir, strings.TrimPrefix(path, "/"), "index.html")
 			if _, err := os.Stat(candidate); err == nil {
-				http.ServeFile(w, r, candidate)
+				serveHTML(w, r, candidate, path)
 				return
 			}
 		}
