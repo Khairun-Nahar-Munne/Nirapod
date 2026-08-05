@@ -34,7 +34,10 @@ func RobotsTxt(siteURL string) string { return buildRobotsTxt(siteURL) }
 func SitemapXML(siteURL string) string { return buildSitemapXML(siteURL) }
 
 func staticFS() fs.FS {
-	for _, dir := range []string{"public", "../public"} {
+	// Local `go run .` uses ./public. Vercel Go functions may run with
+	// cwd at the project root or under api/, and includeFiles may place
+	// assets relative to either location.
+	for _, dir := range []string{"public", "../public", "./public", "/var/task/public"} {
 		if info, err := os.Stat(dir); err == nil && info.IsDir() {
 			return os.DirFS(dir)
 		}

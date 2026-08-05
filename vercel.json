@@ -1,23 +1,19 @@
 {
   "$schema": "https://openapi.vercel.sh/vercel.json",
-  "outputDirectory": "public",
-  "cleanUrls": true,
-  "trailingSlash": false,
-  "redirects": [
+  "version": 2,
+  "builds": [
     {
-      "source": "/news",
-      "destination": "/activities",
-      "permanent": true
+      "src": "api/index.go",
+      "use": "@vercel/go",
+      "config": {
+        "includeFiles": ["public/**"]
+      }
     }
   ],
-  "rewrites": [
+  "routes": [
     {
-      "source": "/robots.txt",
-      "destination": "/api/seo?doc=robots"
-    },
-    {
-      "source": "/sitemap.xml",
-      "destination": "/api/seo?doc=sitemap"
+      "src": "/(.*)",
+      "dest": "api/index.go"
     }
   ]
 }
